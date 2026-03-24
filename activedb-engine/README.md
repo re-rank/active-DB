@@ -1,24 +1,6 @@
-<div align="center">
+# ActiveDB
 
-<picture>
-  <img src="/assets/full_logo.png" alt="ActiveDB Logo" width="400">
-</picture>
-
-**ActiveDB** — an open-source graph-vector database engine built from scratch in Rust.
-
-<h3>
-  <a href="https://docs.activedb.dev">Docs</a> |
-  <a href="https://cloud.activedb.dev">Cloud</a> |
-  <a href="https://github.com/re-rank/activedb-engine/issues">Issues</a>
-</h3>
-
-[![CI](https://github.com/re-rank/activedb-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/re-rank/activedb-engine/actions)
-[![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
-[![Rust](https://img.shields.io/badge/rust-1.83%2B-orange.svg)](https://www.rust-lang.org)
-
-</div>
-
----
+> An open-source graph-vector database engine built from scratch in Rust.
 
 ActiveDB는 그래프, 벡터, 전문 검색(BM25)을 하나의 엔진에 통합한 데이터베이스입니다. AI 애플리케이션에서 별도의 그래프 DB, 벡터 DB, 검색 엔진을 조합할 필요 없이 단일 플랫폼으로 RAG 파이프라인을 구축할 수 있습니다.
 

@@ -122,6 +122,20 @@ export const subscriptions = pgTable("subscriptions", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
 });
 
+// ── Organization Invites ──
+
+export const orgInvites = pgTable("org_invites", {
+  id: text("id").primaryKey().$defaultFn(() => generateId("inv")),
+  orgId: text("org_id").notNull().references(() => organizations.id, { onDelete: "cascade" }),
+  email: text("email").notNull(),
+  role: text("role").notNull().default("developer"),
+  token: text("token").unique().notNull(),
+  invitedBy: text("invited_by").notNull().references(() => users.id),
+  expiresAt: timestamp("expires_at", { withTimezone: true }),
+  acceptedAt: timestamp("accepted_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+});
+
 // ── Backups ──
 
 export const backups = pgTable("backups", {
@@ -134,4 +148,31 @@ export const backups = pgTable("backups", {
   sizeBytes: bigint("size_bytes", { mode: "number" }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
   expiresAt: timestamp("expires_at", { withTimezone: true }),
+});
+
+// ── Usage Records ──
+
+export const usageRecords = pgTable("usage_records", {
+  id: text("id").primaryKey().$defaultFn(() => generateId("usg")),
+  instanceId: text("instance_id").notNull().references(() => instances.id),
+  periodStart: timestamp("period_start", { withTimezone: true }).notNull(),
+  periodEnd: timestamp("period_end", { withTimezone: true }).notNull(),
+  apiCalls: bigint("api_calls", { mode: "number" }).default(0),
+  storageBytes: bigint("storage_bytes", { mode: "number" }).default(0),
+  networkBytes: bigint("network_bytes", { mode: "number" }).default(0),
+  reportedToStripe: boolean("reported_to_stripe").default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+});
+
+// ── Audit Logs ──
+
+export const auditLogs = pgTable("audit_logs", {
+  id: text("id").primaryKey().$defaultFn(() => generateId("aud")),
+  actorId: text("actor_id").notNull().references(() => users.id),
+  action: text("action").notNull(),
+  resourceType: text("resource_type").notNull(),
+  resourceId: text("resource_id").notNull(),
+  metadata: jsonb("metadata").default({}),
+  ipAddress: text("ip_address"),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
