@@ -30,7 +30,8 @@
       "Bash(cd \"/f/active DB/activedb-engine\" && git add README.md && git commit -m \"docs: rewrite README with full project documentation\" && git push 2>&1)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(gh run:*)",
-      "Bash(echo === $file ===:*)"
+      "Bash(echo === $file ===:*)",
+      "Bash(cd \"F:/active DB/activedb-engine\" && git push origin main 2>&1)"
     ]
   }
 }

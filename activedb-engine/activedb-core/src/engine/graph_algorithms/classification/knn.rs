@@ -59,7 +59,7 @@ pub fn knn_classify(
         }
 
         // 다수결
-        if let Some((&best_label, _)) = label_votes.iter().max_by_key(|(_, &v)| v) {
+        if let Some((&best_label, _)) = label_votes.iter().max_by_key(|&(_, &v)| v) {
             result.insert(graph.to_node_id(idx), best_label);
         }
     }

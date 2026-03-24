@@ -2,8 +2,6 @@ use crate::engine::{
     graph_algorithms::compact_graph::CompactGraph,
     types::GraphError,
 };
-use std::collections::HashSet;
-
 /// Maximal Independent Set (MIS): 서로 인접하지 않는 최대 노드 집합.
 /// Greedy 알고리즘: 차수 오름차순으로 노드를 선택 (작은 차수 우선).
 /// 반환: MIS에 속하는 노드 ID 목록.
