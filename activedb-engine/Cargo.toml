@@ -1,0 +1,32 @@
+[workspace]
+members = [
+    "activedb-core",
+    "activedb-container",
+    "activedb-macros",
+    "activedb-cli",
+    "aql-tests",
+    "metrics",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2024"
+license = "AGPL-3.0-or-later"
+repository = "https://github.com/ActiveDB/activedb-engine"
+homepage = "https://activedb.dev"
+description = "A graph-vector database engine"
+
+[profile.release]
+opt-level = 2
+codegen-units = 1
+lto = true
+panic = "abort"
+strip = "debuginfo"
+
+[profile.dev]
+opt-level = 0
+codegen-units = 256
+lto = false
+panic = "abort"
+incremental = true
+debug = 1

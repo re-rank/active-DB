@@ -1,0 +1,24 @@
+[package]
+name = "activedb-macros"
+version = "0.1.7"
+edition = "2024"
+authors = ["ActiveDB Team"]
+repository = "https://github.com/ActiveDB/activedb-engine"
+license = "AGPL-3.0-or-later"
+description = "Proc macros for ActiveDB"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "2.0.104", features = ["full"] }
+quote = "1.0.40"
+proc-macro2 = "1.0.95"
+dirs = "5.0.1"
+
+[dev-dependencies]
+trybuild = "1.0"
+
+[features]
+debug-output = []
+default = []

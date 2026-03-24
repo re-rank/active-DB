@@ -1,0 +1,59 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo publish -p activedb-macros --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+      - run: sleep 30
+      - run: cargo publish -p activedb-core --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+      - run: sleep 30
+      - run: cargo publish -p activedb-cli --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+  docker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: docker/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/activedb/engine:latest
+            ghcr.io/activedb/engine:${{ github.ref_name }}
+
+  binaries:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - os: macos-latest
+            target: aarch64-apple-darwin
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - run: cargo build --release --bin activedb --target ${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: activedb-${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/activedb*

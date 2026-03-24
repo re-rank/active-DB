@@ -1,0 +1,11 @@
+FROM rust:1.83-slim AS builder
+WORKDIR /app
+COPY . .
+RUN cargo build --bin activedb-container
+
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /app/target/debug/activedb-container /usr/local/bin/
+EXPOSE 6969
+ENV RUST_LOG=debug
+CMD ["activedb-container"]

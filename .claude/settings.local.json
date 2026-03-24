@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:qdrant.tech)",
+      "WebFetch(domain:docs.helix-db.com)",
+      "WebFetch(domain:api.qdrant.tech)",
+      "Bash(tail:*)",
+      "Bash(cd \"F:/active DB/active DB frontend\" && rm -rf temp-init && npx --yes create-next-app@latest temp-init --typescript --tailwind --eslint --app --src-dir --no-import-alias --use-npm --turbopack 2>&1 <<EOF\nno\nEOF)",
+      "Bash(cd \"F:/active DB/active DB backend\" && cargo check 2>&1)",
+      "Bash(cd \"F:/active DB\" && git init 2>&1)",
+      "Bash(cd \"F:/active DB/active DB frontend\" && npm run build 2>&1)",
+      "Bash(gh repo:*)",
+      "Bash(gh api:*)",
+      "Bash(echo W3dvcmtzcGFjZV0KbWVtYmVycyA9IFsKICAgICJoZWxpeC1kYiIsCiAgICAi\naGVsaXgtY29udGFpbmVyIiwKICAgICJoZWxpeC1tYWNyb3MiLAogICAgImhl\nbGl4LWNsaSIsCiAgICAiaHFsLXRlc3RzIiwKICAgICJtZXRyaWNzIiwKXQpy\nZXNvbHZlciA9ICIyIgoKW3Byb2ZpbGUucmVsZWFzZV0Kb3B0LWxldmVsID0g\nMgpjb2RlZ2VuLXVuaXRzID0gMQpsdG8gPSB0cnVlCnBhbmljID0gImFib3J0\nIgpzdHJpcCA9ICJkZWJ1Z2luZm8iCgpbcHJvZmlsZS5kZXZdCm9wdC1sZXZl\nbCA9IDAKY29kZWdlbi11bml0cyA9IDI1NgpsdG8gPSBmYWxzZQpwYW5pYyA9\nICJhYm9ydCIKaW5jcmVtZW50YWwgPSB0cnVlCmRlYnVnID0gMQo=:*)",
+      "Bash(find:*)",
+      "Bash(gh auth:*)",
+      "Bash(cd \"F:/active DB\" && rm -rf \"active DB backend\" \"active DB frontend\" docker-compose.yml README.md LICENSE .git 2>&1)",
+      "Bash(cd \"F:/active DB\" && git clone https://github.com/re-rank/helix-db.git . 2>&1)",
+      "Bash(cd \"F:/active DB\" && git clone https://github.com/re-rank/helix-db.git helix-db-fork 2>&1)",
+      "Bash(cd \"F:/active DB\" && git remote add upstream https://github.com/helixdb/helix-db.git 2>&1)",
+      "Bash(head:*)",
+      "Bash(cd:*)",
+      "Bash(wc:*)",
+      "Bash(ls:*)",
+      "Bash(cd \"/f/active DB/activedb-engine\" && cargo check --workspace 2>&1)"
+    ]
+  }
+}
