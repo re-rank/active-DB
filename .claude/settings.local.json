@@ -24,7 +24,10 @@
       "Bash(cd:*)",
       "Bash(wc:*)",
       "Bash(ls:*)",
-      "Bash(cd \"/f/active DB/activedb-engine\" && cargo check --workspace 2>&1)"
+      "Bash(cd \"/f/active DB/activedb-engine\" && cargo check --workspace 2>&1)",
+      "Bash(cd \"/f/active DB/activedb-engine\" && git init && git add -A && git commit -m \"chore: initialize ActiveDB engine repository\" && git branch -M main && git remote add origin https://github.com/re-rank/activedb-engine.git && git push -u origin main 2>&1)",
+      "Bash(cd \"/f/active DB/activedb-cloud\" && git init && git add -A && git commit -m \"chore: initialize ActiveDB cloud service\" && git branch -M main && git remote add origin https://github.com/re-rank/activedb-cloud.git && git push -u origin main 2>&1)",
+      "Bash(cd \"/f/active DB/activedb-engine\" && git add README.md && git commit -m \"docs: rewrite README with full project documentation\" && git push 2>&1)"
     ]
   }
 }
