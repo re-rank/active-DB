@@ -31,7 +31,8 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(gh run:*)",
       "Bash(echo === $file ===:*)",
-      "Bash(cd \"F:/active DB/activedb-engine\" && git push origin main 2>&1)"
+      "Bash(cd \"F:/active DB/activedb-engine\" && git push origin main 2>&1)",
+      "Bash(done)"
     ]
   }
 }
