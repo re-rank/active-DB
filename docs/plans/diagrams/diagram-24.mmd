@@ -1,0 +1,26 @@
+graph TB
+    subgraph HNSW_Layers["HNSW 레이어 구조"]
+        L3["Layer 3 (최상위) — 노드 수: 소수, 장거리 연결"]
+        L2["Layer 2"]
+        L1["Layer 1"]
+        L0["Layer 0 (최하위) — 모든 노드 포함, 조밀한 연결"]
+    end
+
+    subgraph Search_Process["검색 과정"]
+        S1["1. 최상위 레이어 entry point 시작"]
+        S2["2. 탐욕적 탐색 — 가장 가까운 이웃으로 이동"]
+        S3["3. 하위 레이어로 내려감"]
+        S4["4. Layer 0에서 K개 최근접 이웃 반환"]
+    end
+
+    L3 --> L2 --> L1 --> L0
+    S1 --> S2 --> S3 --> S4
+
+    L3 -.-> S1
+    L0 -.-> S4
+
+    classDef layer fill:#e8eaf6,stroke:#283593
+    classDef search fill:#e8f5e9,stroke:#1b5e20
+
+    class L3,L2,L1,L0 layer
+    class S1,S2,S3,S4 search

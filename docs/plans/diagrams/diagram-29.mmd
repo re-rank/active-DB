@@ -1,0 +1,17 @@
+graph LR
+    subgraph Formula["MMR 공식"]
+        F["MMR = argmax<br/>λ×Sim(d,q) - (1-λ)×max Sim(d,d_sel)"]
+    end
+
+    subgraph Lambda["λ 파라미터"]
+        High["λ→1.0: 관련성 우선"]
+        Low["λ→0.0: 다양성 우선"]
+    end
+
+    subgraph Process["과정"]
+        S1["1. 가장 관련 높은 문서 선택"]
+        S2["2. 관련성 높으면서 기선택과 다른 것"]
+        S3["3. K개까지 반복"]
+    end
+
+    S1 --> S2 --> S3

@@ -1,0 +1,28 @@
+graph TB
+    subgraph Centrality["중심성 알고리즘"]
+        PR["PageRank<br/><small>반복적 링크 분석</small>"]
+        DE["Degree<br/><small>연결 수 기반</small>"]
+        BT["Betweenness<br/><small>매개 중심성</small>"]
+        CL["Closeness<br/><small>근접 중심성</small>"]
+        EV["Eigenvector<br/><small>고유벡터 중심성</small>"]
+        HM["Harmonic<br/><small>조화 중심성</small>"]
+    end
+
+    subgraph Use_Cases["활용 사례"]
+        Influence["영향력 있는 노드 발견"]
+        Bridge["브릿지 노드 탐지"]
+        Hub["허브 노드 식별"]
+    end
+
+    PR --> Influence
+    DE --> Hub
+    BT --> Bridge
+    CL --> Influence
+    EV --> Influence
+    HM --> Influence
+
+    classDef algo fill:#e8eaf6,stroke:#283593
+    classDef use fill:#e8f5e9,stroke:#1b5e20
+
+    class PR,DE,BT,CL,EV,HM algo
+    class Influence,Bridge,Hub use

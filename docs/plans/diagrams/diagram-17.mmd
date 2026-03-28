@@ -1,0 +1,32 @@
+graph TB
+    subgraph Write_Ops["쓰기 작업"]
+        AddN["AddN - 노드 추가"]
+        AddE["AddE - 엣지 추가"]
+        Update["Update - 속성 수정"]
+        Upsert["Upsert - 있으면 수정, 없으면 생성"]
+        Drop["Drop - 삭제"]
+    end
+
+    subgraph LMDB_Tables["LMDB 테이블"]
+        nodes["nodes_db"]
+        edges["edges_db"]
+        out_edges["out_edges_db (DUP_SORT)"]
+        in_edges["in_edges_db (DUP_SORT)"]
+    end
+
+    AddN -->|"Bincode"| nodes
+    AddE -->|"Bincode"| edges
+    AddE --> out_edges
+    AddE --> in_edges
+    Update -->|"Bincode"| nodes
+    Update -->|"Bincode"| edges
+    Drop --> nodes
+    Drop --> edges
+    Drop --> out_edges
+    Drop --> in_edges
+
+    classDef write fill:#ffcdd2,stroke:#b71c1c
+    classDef db fill:#c8e6c9,stroke:#2e7d32
+
+    class AddN,AddE,Update,Upsert,Drop write
+    class nodes,edges,out_edges,in_edges db

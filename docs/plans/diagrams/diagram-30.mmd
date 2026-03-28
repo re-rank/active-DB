@@ -1,0 +1,43 @@
+graph TB
+    subgraph Clients["클라이언트"]
+        HTTP_Client["HTTP Client"]
+        MCP_Agent["AI Agent (MCP)"]
+        Dashboard["Web Dashboard"]
+    end
+
+    subgraph Gateway["ActiveDBGateway"]
+        Axum["Axum HTTP Server :6969"]
+
+        subgraph Routing["라우팅"]
+            Router_GW["ActiveDBRouter"]
+            ReadRoutes["읽기 라우트 /query/*"]
+            WriteRoutes["쓰기 라우트 /mutate/*"]
+            BuiltinRoutes["내장 라우트 /introspect, /nodes, /edges"]
+        end
+
+        subgraph Workers["워커 풀"]
+            WP["WorkerPool"]
+            R_Workers["리더 워커 ×N (코어 핀닝)"]
+            W_Worker["라이터 ×1 (전용 스레드)"]
+            Channel["Flume Channel (작업 큐)"]
+        end
+    end
+
+    HTTP_Client --> Axum
+    MCP_Agent --> Axum
+    Dashboard --> Axum
+    Axum --> Router_GW
+    Router_GW --> ReadRoutes --> WP
+    Router_GW --> WriteRoutes --> WP
+    Router_GW --> BuiltinRoutes
+    WP --> R_Workers
+    WP --> W_Worker
+    WP --> Channel
+
+    classDef client fill:#e3f2fd,stroke:#1565c0
+    classDef routing fill:#fff3e0,stroke:#e65100
+    classDef worker fill:#e8f5e9,stroke:#2e7d32
+
+    class HTTP_Client,MCP_Agent,Dashboard client
+    class Router_GW,ReadRoutes,WriteRoutes,BuiltinRoutes routing
+    class WP,R_Workers,W_Worker,Channel worker

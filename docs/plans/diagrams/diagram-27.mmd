@@ -1,0 +1,40 @@
+graph TB
+    subgraph Input_BM25["입력"]
+        Query_BM25["검색 쿼리: 'graph database engine'"]
+    end
+
+    subgraph Tokenize["토큰화"]
+        T1["'graph'"]
+        T2["'database'"]
+        T3["'engine'"]
+    end
+
+    subgraph Scoring["BM25 스코어링"]
+        TF["TF (단어 빈도)"]
+        IDF["IDF = log((N-n+0.5)/(n+0.5))"]
+        DL["문서 길이 정규화: dl/avgdl"]
+        BM25_Score["BM25 = Σ IDF × (TF×(k1+1)) / (TF+k1×(1-b+b×dl/avgdl))"]
+    end
+
+    subgraph Config_BM25["설정"]
+        K1["k1=1.2 (TF 포화)"]
+        B["b=0.75 (길이 정규화)"]
+    end
+
+    Query_BM25 --> Tokenize
+    T1 --> TF
+    T2 --> TF
+    T3 --> TF
+    TF --> BM25_Score
+    IDF --> BM25_Score
+    DL --> BM25_Score
+    K1 --> BM25_Score
+    B --> BM25_Score
+
+    classDef input fill:#e3f2fd,stroke:#1565c0
+    classDef token fill:#fff3e0,stroke:#e65100
+    classDef score fill:#e8f5e9,stroke:#2e7d32
+
+    class Query_BM25 input
+    class T1,T2,T3 token
+    class TF,IDF,DL,BM25_Score score

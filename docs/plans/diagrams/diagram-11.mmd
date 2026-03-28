@@ -1,0 +1,45 @@
+graph LR
+    subgraph Input["입력"]
+        AQL["schema.aql<br/>(ActiveQL 소스)"]
+    end
+
+    subgraph Parser_Stage["1단계: Parser"]
+        PEG["PEG 문법<br/>(grammar.pest)"]
+        AST["구문 트리<br/>(Parse Tree)"]
+    end
+
+    subgraph Analyzer_Stage["2단계: Analyzer"]
+        TypeCheck["타입 체크"]
+        Validate["검증"]
+        ErrorRender["에러 렌더링<br/>(Ariadne)"]
+    end
+
+    subgraph Generator_Stage["3단계: Generator"]
+        SchemaGen["스키마 코드 생성"]
+        QueryGen["쿼리 코드 생성"]
+        TraversalGen["순회 코드 생성"]
+    end
+
+    subgraph Output["출력"]
+        RustCode["생성된 Rust 코드<br/>(queries.rs, schemas.rs)"]
+    end
+
+    AQL --> PEG --> AST
+    AST --> TypeCheck --> Validate
+    Validate -->|"통과"| SchemaGen
+    Validate -->|"실패"| ErrorRender
+    SchemaGen --> RustCode
+    QueryGen --> RustCode
+    TraversalGen --> RustCode
+
+    classDef input fill:#e3f2fd,stroke:#1565c0
+    classDef parser fill:#fff3e0,stroke:#e65100
+    classDef analyzer fill:#f3e5f5,stroke:#6a1b9a
+    classDef generator fill:#e8f5e9,stroke:#2e7d32
+    classDef output fill:#ffecb3,stroke:#ff8f00
+
+    class AQL input
+    class PEG,AST parser
+    class TypeCheck,Validate,ErrorRender analyzer
+    class SchemaGen,QueryGen,TraversalGen generator
+    class RustCode output

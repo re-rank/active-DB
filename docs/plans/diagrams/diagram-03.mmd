@@ -1,0 +1,65 @@
+graph TB
+    subgraph core["activedb-core/src"]
+        lib["lib.rs"]
+
+        subgraph engine["engine/"]
+            sc["storage_core/<br/>LMDB 영속 스토리지"]
+            tc["traversal_core/<br/>그래프 순회 엔진"]
+            vc["vector_core/<br/>HNSW 벡터 인덱스"]
+            bm["bm25/<br/>전문검색"]
+            ga["graph_algorithms/<br/>30+ 알고리즘"]
+            rr["reranker/<br/>RRF·MMR 리랭킹"]
+        end
+
+        subgraph compiler["compiler/"]
+            pa["parser/<br/>PEG 문법 파서"]
+            an["analyzer/<br/>타입·검증"]
+            ge["generator/<br/>Rust 코드 생성"]
+        end
+
+        subgraph gateway_mod["gateway/"]
+            gw["gateway.rs<br/>HTTP 서버"]
+            rt["router/<br/>라우팅"]
+            wp["worker_pool/<br/>멀티스레드"]
+            mc["mcp/<br/>MCP 프로토콜"]
+            bi["builtin/<br/>내장 쿼리"]
+        end
+
+        subgraph protocol["protocol/"]
+            req["request.rs"]
+            res["response.rs"]
+            val["value.rs"]
+            cs["custom_serde/"]
+        end
+
+        subgraph utils_mod["utils/"]
+            items["items.rs<br/>Node·Edge"]
+            id["id.rs<br/>UUID"]
+            props["properties.rs"]
+        end
+    end
+
+    lib --> engine
+    lib --> compiler
+    lib --> gateway_mod
+    lib --> protocol
+    lib --> utils_mod
+
+    tc --> sc
+    tc --> vc
+    tc --> bm
+    tc --> ga
+    tc --> rr
+    gw --> rt
+    gw --> wp
+    gw --> mc
+
+    classDef storage fill:#ffecb3,stroke:#ff8f00
+    classDef traversal fill:#c8e6c9,stroke:#2e7d32
+    classDef vector fill:#b3e5fc,stroke:#0277bd
+    classDef algo fill:#e1bee7,stroke:#6a1b9a
+
+    class sc storage
+    class tc traversal
+    class vc,bm vector
+    class ga,rr algo

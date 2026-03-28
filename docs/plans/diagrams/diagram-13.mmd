@@ -1,0 +1,31 @@
+sequenceDiagram
+    participant P as Parser 출력
+    participant A as Analyzer
+    participant GV as Graph Step Validator
+    participant QV as Query Validator
+    participant MV as Migration Validator
+    participant E as Error Renderer (Ariadne)
+
+    P->>A: Parse Tree 전달
+    A->>A: 타입 테이블 구축
+
+    par 병렬 검증
+        A->>GV: 그래프 순회 검증
+        Note over GV: 엣지 타입 호환성<br/>노드 연결 유효성<br/>순회 방향 정합성
+        GV-->>A: 결과
+    and
+        A->>QV: 쿼리 검증
+        Note over QV: 파라미터 타입 체크<br/>반환 타입 추론<br/>바인딩 유효성
+        QV-->>A: 결과
+    and
+        A->>MV: 마이그레이션 검증
+        Note over MV: 스키마 호환성<br/>필드 추가/삭제 안전성
+        MV-->>A: 결과
+    end
+
+    alt 에러 발생
+        A->>E: 에러 목록 전달
+        E-->>A: Ariadne 스타일 에러 메시지
+    else 성공
+        A-->>P: 검증 완료 → Generator로 전달
+    end

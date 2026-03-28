@@ -1,0 +1,22 @@
+graph LR
+    subgraph Workspace["Cargo Workspace"]
+        macros["activedb-macros<br/><small>proc-macro</small>"]
+        core["activedb-core<br/><small>DB 엔진 핵심</small>"]
+        cli["activedb-cli<br/><small>CLI 도구</small>"]
+        container["activedb-container<br/><small>프로덕션 런타임</small>"]
+        tests["aql-tests<br/><small>통합 테스트</small>"]
+        metrics_crate["metrics<br/><small>메트릭 수집</small>"]
+    end
+
+    macros --> core
+    core --> cli
+    core --> container
+    core --> tests
+    container --> metrics_crate
+
+    style macros fill:#fff9c4,stroke:#f9a825
+    style core fill:#c8e6c9,stroke:#2e7d32
+    style cli fill:#bbdefb,stroke:#1565c0
+    style container fill:#d1c4e9,stroke:#4527a0
+    style tests fill:#ffe0b2,stroke:#e65100
+    style metrics_crate fill:#f8bbd0,stroke:#ad1457

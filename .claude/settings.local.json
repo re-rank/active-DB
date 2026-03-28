@@ -32,7 +32,14 @@
       "Bash(gh run:*)",
       "Bash(echo === $file ===:*)",
       "Bash(cd \"F:/active DB/activedb-engine\" && git push origin main 2>&1)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(echo mermaid-cli not found:*)",
+      "Bash(cd \"F:/active DB/docs/plans/diagrams\" && npx -y @mermaid-js/mermaid-cli -i diagram-01.mmd -o diagram-01.svg -b white -q 2>&1)",
+      "Bash(rm:*)",
+      "Bash(which pandoc:*)",
+      "Bash(cd \"F:/active DB/docs/plans\" && npx -y md-to-pdf \"10-architecture-guide-pdf.md\" --launch-options '{\"args\":[\"--no-sandbox\",\"--disable-setuid-sandbox\"]}' 2>&1)",
+      "Bash(cd \"F:/active DB/docs/plans\" && python -c \"\nimport sys, io\nsys.stdout = io.TextIOWrapper\\(sys.stdout.buffer, encoding='utf-8'\\)\nfrom PyPDF2 import PdfReader\nr = PdfReader\\('10-architecture-guide-pdf.pdf'\\)\nprint\\(f'Total pages: {len\\(r.pages\\)}'\\)\nfor i in [0, 1, 2, 5, 10, 15, 20, 25]:\n    if i < len\\(r.pages\\):\n        t = r.pages[i].extract_text\\(\\)[:150].replace\\('\\\\n', ' '\\)\n        print\\(f'Page {i+1}: {t}'\\)\n\" 2>&1)",
+      "Bash(cd \"F:\\\\active DB\\\\activedb-engine\" && cargo check --workspace 2>&1)"
     ]
   }
 }

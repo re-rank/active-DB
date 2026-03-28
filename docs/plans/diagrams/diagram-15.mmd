@@ -1,0 +1,13 @@
+graph LR
+    S1["N&lt;User&gt;<br/>인덱스 조회<br/>n_from_index()"]
+    S2["In&lt;Follows&gt;<br/>들어오는 엣지<br/>in_edges()"]
+    S3["FromN<br/>소스 노드<br/>from_node()"]
+    S4["WHERE<br/>age > 18<br/>filter_ref()"]
+    S5["ORDER<br/>age DESC<br/>order()"]
+    S6["RANGE<br/>0..10<br/>range()"]
+    S7["RETURN<br/>결과 수집<br/>collect()"]
+
+    S1 --> S2 --> S3 --> S4 --> S5 --> S6 --> S7
+
+    classDef step fill:#e3f2fd,stroke:#1565c0
+    class S1,S2,S3,S4,S5,S6,S7 step

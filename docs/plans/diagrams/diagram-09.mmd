@@ -1,0 +1,33 @@
+stateDiagram-v2
+    [*] --> Idle
+
+    state "읽기 경로" as ReadPath {
+        Idle --> RO_Begin: 읽기 요청
+        RO_Begin --> RO_Active: begin_ro_txn()
+        RO_Active --> RO_Read: 데이터 조회
+        RO_Read --> RO_Active: 추가 조회
+        RO_Active --> RO_End: 완료
+        RO_End --> Idle: txn 해제
+    }
+
+    state "쓰기 경로" as WritePath {
+        Idle --> RW_Queue: 쓰기 요청
+        RW_Queue --> RW_Begin: 라이터 스레드 획득
+        RW_Begin --> RW_Active: begin_rw_txn()
+        RW_Active --> RW_Write: 데이터 수정
+        RW_Write --> RW_Active: 추가 수정
+        RW_Active --> RW_Commit: commit()
+        RW_Commit --> Idle: 성공
+        RW_Active --> RW_Abort: abort()
+        RW_Abort --> Idle: 롤백
+    }
+
+    note right of ReadPath
+        여러 읽기 트랜잭션 동시 실행 가능
+        MVCC 스냅샷 격리
+    end note
+
+    note right of WritePath
+        쓰기 트랜잭션은 동시에 1개만
+        전용 라이터 스레드가 직렬화
+    end note

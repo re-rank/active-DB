@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant C as Client
+    participant G as Gateway (Axum)
+    participant R as Router
+    participant WP as WorkerPool
+    participant T as Traversal Core
+    participant S as Storage Core
+    participant P as Protocol
+
+    C->>G: HTTP POST /query
+    G->>R: Request 디코딩
+    R->>R: 읽기/쓰기 판별
+
+    alt 읽기 쿼리
+        R->>WP: 리더 워커 할당
+        WP->>T: 순회 실행 (RO txn)
+    else 쓰기 쿼리
+        R->>WP: 라이터 스레드 전송
+        WP->>T: 순회 실행 (RW txn)
+    end
+
+    T->>S: 노드/엣지 조회
+    S-->>T: 결과 반환
+    T->>P: Response 직렬화
+    P-->>G: JSON / Bincode
+    G-->>C: HTTP Response

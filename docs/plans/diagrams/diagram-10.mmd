@@ -1,0 +1,37 @@
+graph TB
+    subgraph Process["ActiveDB 프로세스"]
+        subgraph Heap["힙 메모리 (MiMalloc)"]
+            App["애플리케이션 로직"]
+            Serde["직렬화 버퍼"]
+        end
+
+        subgraph Arena_Mem["아레나 메모리 (Bumpalo)"]
+            NodeArena["Node&lt;'arena&gt; 인스턴스"]
+            EdgeArena["Edge&lt;'arena&gt; 인스턴스"]
+            StrArena["문자열 슬라이스"]
+        end
+
+        subgraph MMap["메모리 매핑 (LMDB)"]
+            Pages["B+ 트리 페이지"]
+            Data["바이너리 데이터"]
+        end
+    end
+
+    subgraph DiskLayer["디스크"]
+        MDB["data.mdb"]
+        Lock["lock.mdb"]
+    end
+
+    App --> Arena_Mem
+    Arena_Mem -.->|"제로카피 참조"| MMap
+    MMap -.->|"mmap"| DiskLayer
+
+    classDef heap fill:#fff3e0,stroke:#e65100
+    classDef arena fill:#e8f5e9,stroke:#2e7d32
+    classDef mmap fill:#e3f2fd,stroke:#1565c0
+    classDef disk fill:#eceff1,stroke:#455a64
+
+    class App,Serde heap
+    class NodeArena,EdgeArena,StrArena arena
+    class Pages,Data mmap
+    class MDB,Lock disk

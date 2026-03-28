@@ -1,0 +1,35 @@
+graph TB
+    subgraph Similarity["유사도"]
+        Jaccard["Jaccard: |A∩B| / |A∪B|"]
+        Cosine["Cosine Neighbor: cos(A, B)"]
+    end
+
+    subgraph LinkPred["링크 예측"]
+        CN["Common Neighbors: |N(x) ∩ N(y)|"]
+        AA["Adamic-Adar: Σ 1/log|N(z)|"]
+        PA["Preferential Attachment: |N(x)| × |N(y)|"]
+        RA["Resource Allocation: Σ 1/|N(z)|"]
+        TN["Total Neighbors: |N(x) ∪ N(y)|"]
+    end
+
+    subgraph App["활용"]
+        Recommend["추천 시스템"]
+        Missing["누락 링크 발견"]
+        Similar["유사 노드 탐색"]
+    end
+
+    Jaccard --> Similar
+    Cosine --> Similar
+    CN --> Missing
+    AA --> Recommend
+    PA --> Recommend
+    RA --> Missing
+    TN --> Missing
+
+    classDef sim fill:#b3e5fc,stroke:#0277bd
+    classDef link fill:#c8e6c9,stroke:#2e7d32
+    classDef app fill:#fff3e0,stroke:#e65100
+
+    class Jaccard,Cosine sim
+    class CN,AA,PA,RA,TN link
+    class Recommend,Missing,Similar app
