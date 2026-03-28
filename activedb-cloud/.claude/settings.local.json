@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"F:/active DB/activedb-cloud\" && npm run build 2>&1)",
+      "Bash(cd \"F:/active DB/activedb-cloud\" && npm install 2>&1)",
+      "Bash(cd \"F:/active DB/activedb-cloud\" && npx next build 2>&1)"
+    ]
+  }
+}
